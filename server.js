@@ -2,7 +2,9 @@
 let database = {
   users: {},
   articles: {},
-  nextArticleId: 1
+  nextArticleId: 1,
+  comments: {},
+  nextCommentId: 1
 };
 
 const routes = {
@@ -26,6 +28,21 @@ const routes = {
   },
   '/articles/:id/downvote': {
     'PUT': downvoteArticle
+  },
+  '/comments': {
+    'GET': getComments,
+    'POST': createComment
+  },
+  '/comments/:id': {
+    'GET': getComment,
+    'PUT': updateComment,
+    'DELETE': deleteComment
+  },
+  '/comments/:id/upvote': {
+    'PUT': upvoteComment
+  },
+  '/comments/:id/downvote': {
+    'PUT': downvoteComment
   }
 };
 
@@ -218,6 +235,67 @@ function downvoteArticle(url, request) {
   }
 
   return response;
+}
+
+function createComment(url, request) {
+  const requestComment = request.body && request.body.comment;
+  const response = {};
+
+  if (requestComment && requestComment.body &&
+      requestComment.username && database.users[requestComment.username]) {
+    const article = database.articles[requestComment.articleId];
+
+    if (article) {
+      const comment = {
+        id: database.nextCommentId++,
+        body : requestComment.body,
+        username: requestComment.username,
+        articleId : requestComment.articleId,
+        upvotedBy: [],
+        downvotedBy: []
+      };
+
+      //save to database
+      database.comments[comment.id] = comment;
+      database.users[comment.username].commentIds.push(comment.id);
+      database.articles[requestComment.articleId].commentIds.push(comment.id);
+
+      //send response
+      response.body = {comment: comment};
+      response.status = 201;
+    }
+    else {
+     response.status = 400;
+    }
+  }
+  else {
+    response.status = 400;
+  }
+  return response;
+}
+
+function getComments() {
+
+}
+
+function getComment() {
+
+}
+
+function updateComment() {
+
+}
+
+function deleteComment() {
+
+}
+
+function upvoteComment() {
+
+}
+
+function downvoteComment() {
+
 }
 
 function upvote(item, username) {
