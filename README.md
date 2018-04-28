@@ -1,4 +1,4 @@
-The Scoop for Codecademy
+# The Scoop for Codecademy
 
 ## Project Implementation
 
