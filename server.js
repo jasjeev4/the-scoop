@@ -312,7 +312,24 @@ function updateComment(url, request) {
 }
 
 function deleteComment(url, request) {
+  const id = Number(url.split('/').filter(segment => segment)[1]);
+  const savedComment = database.comments[id];
+  const response = {};
 
+  if(savedComment) {
+    //delete from database
+    database.comments[id] = null;
+    const userCommentIds = database.users[savedComment.username].commentIds;
+    userCommentIds.splice(userCommentIds.indexOf(id), 1);
+    const articleCommentIds = database.articles[savedComment.articleId].commentIds;
+    articleCommentIds.splice(articleCommentIds.indexOf(id), 1);
+    response.status = 204;
+  }
+  else {
+    response.status = 404;
+  }
+
+  return response;
 }
 
 function upvoteComment(url, request) {
