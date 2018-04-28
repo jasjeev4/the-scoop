@@ -30,11 +30,9 @@ const routes = {
     'PUT': downvoteArticle
   },
   '/comments': {
-    'GET': getComments,
     'POST': createComment
   },
   '/comments/:id': {
-    'GET': getComment,
     'PUT': updateComment,
     'DELETE': deleteComment
   },
@@ -274,14 +272,6 @@ function createComment(url, request) {
   return response;
 }
 
-function getComments(url, request) {
-
-}
-
-function getComment(url, request) {
-
-}
-
 function updateComment(url, request) {
   const id = Number(url.split('/').filter(segment => segment)[1]);
 
@@ -393,9 +383,7 @@ function downvote(item, username) {
 yaml = require('js-yaml');
 fs   = require('fs');
 
-
 function loadDatabase() {
-  // Get document, or throw exception on error
   try {
     return yaml.safeLoad(fs.readFileSync('database/database.yml', 'utf8'));
   } 
@@ -410,7 +398,7 @@ function saveDatabase() {
     fs.writeFileSync('database/database.yml', yamlData, 'utf8');
   } 
   catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 
