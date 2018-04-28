@@ -1,4 +1,8 @@
-# The Scoop
+The Scoop for Codecademy
+
+## Project Implementation
+
+All the required paths and functionality were completed. Database saves/restores from YAML are powered by by the JS-YAML module.
 
 ## Project Overview
 
