@@ -260,7 +260,7 @@ function createComment(url, request) {
       database.users[comment.username].commentIds.push(comment.id);
       database.articles[requestComment.articleId].commentIds.push(comment.id);
 
-      //send response
+      //set response
       response.body = {comment: comment};
       response.status = 201;
     }
@@ -274,27 +274,52 @@ function createComment(url, request) {
   return response;
 }
 
-function getComments() {
+function getComments(url, request) {
 
 }
 
-function getComment() {
+function getComment(url, request) {
 
 }
 
-function updateComment() {
+function updateComment(url, request) {
+  const id = Number(url.split('/').filter(segment => segment)[1]);
+
+  const requestComment = request.body && request.body.comment;
+  const response = {};
+
+  if (requestComment && requestComment.id && requestComment.body!=='') {
+    if(database.comments[id]) {
+
+      //update comment in database
+      database.comments[id].body = requestComment.body;
+
+      //set response
+      response.body = requestComment;
+      response.status = 200;
+    }
+
+    else {
+      response.status = 404;
+    }
+  }
+
+  else {
+    response.status = 400;
+  }
+  
+  return response;
+}
+
+function deleteComment(url, request) {
 
 }
 
-function deleteComment() {
+function upvoteComment(url, request) {
 
 }
 
-function upvoteComment() {
-
-}
-
-function downvoteComment() {
+function downvoteComment(url, request) {
 
 }
 
