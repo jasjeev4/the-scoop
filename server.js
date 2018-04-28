@@ -390,6 +390,30 @@ function downvote(item, username) {
   return item;
 }
 
+yaml = require('js-yaml');
+fs   = require('fs');
+
+
+function loadDatabase() {
+  // Get document, or throw exception on error
+  try {
+    return yaml.safeLoad(fs.readFileSync('database/database.yml', 'utf8'));
+  } 
+  catch (e) {
+    //console.log(e);
+  }
+}
+
+function saveDatabase() {
+  try {
+    const yamlData = yaml.safeDump(database);
+    fs.writeFileSync('database/database.yml', yamlData, 'utf8');
+  } 
+  catch (e) {
+    console.log(e);
+  }
+}
+
 // Write all code above this line.
 
 const http = require('http');
