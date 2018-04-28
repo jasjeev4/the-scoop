@@ -385,7 +385,7 @@ fs   = require('fs');
 
 function loadDatabase() {
   try {
-    return yaml.safeLoad(fs.readFileSync('database/database.yml', 'utf8'));
+    return yaml.safeLoad(fs.readFileSync('database.yml', 'utf8'));
   } 
   catch (e) {
     //console.log(e);
@@ -395,7 +395,7 @@ function loadDatabase() {
 function saveDatabase() {
   try {
     const yamlData = yaml.safeDump(database);
-    fs.writeFileSync('database/database.yml', yamlData, 'utf8');
+    fs.writeFileSync('database.yml', yamlData, 'utf8');
   } 
   catch (e) {
     //console.log(e);
